@@ -95,6 +95,7 @@ export async function uploadTweet(prevState: any, formData: FormData): Promise<F
       },
     });
     if (tweet) {
+      revalidateTag('tweets');
       return { success: true };
     } else {
       return {

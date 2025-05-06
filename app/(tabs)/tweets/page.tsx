@@ -27,7 +27,7 @@ async function getTweetInfo() {
   });
   return tweets;
 }
-const getCachedtweetInfo = NextCache(async () => getTweetInfo(), ['tweets-list'], {
+const getCachedtweetInfo = NextCache(getTweetInfo, ['tweets-list'], {
   tags: ['tweets'],
 });
 
