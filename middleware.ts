@@ -12,7 +12,8 @@ const publicOnyUrls: IRoutes = {
 };
 
 export async function middleware(request: NextRequest) {
-  const session = await getSession();
+  // const session = await getSession();
+  const session = request.cookies.get('karrot-infomation');
   const exists = publicOnyUrls[request.nextUrl.pathname];
 
   // if (exists) {
