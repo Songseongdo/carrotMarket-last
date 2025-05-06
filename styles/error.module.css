@@ -1,0 +1,14 @@
+.container {
+	padding-top: 50px;
+}
+
+.title {
+	color: red;
+	font-size: 30px;
+}
+.btn {
+	margin-top: 30px;
+}
+.btn:hover {
+	cursor: pointer;
+}
