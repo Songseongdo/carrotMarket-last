@@ -1,5 +1,14 @@
+import { Metadata } from "next";
 import RecoilProvider from "../components/recoilProvider";
 import "../styles/global.css";
+
+export const metadata: Metadata = {
+	title: {
+		template: "%s | Tweets",
+		default: "Tweets Follow",
+	},
+	description: "트위터 따라 하기",
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
 	return (

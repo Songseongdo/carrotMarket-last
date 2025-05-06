@@ -1,14 +1,20 @@
 "use server";
 
 import { z } from "zod";
+import { PASSWORD_MIN_LENGTH } from "../lib/consts";
 
-const checkPassword = (password: string) => password === "12345";
-const emailRegex = new RegExp(/([\w\.\-_]+)?\w+@[\w-_]+(\.\w+){1,}/gim);
+const correctPassword = (password: string) => password === "abcde12345";
+const emailRegex = new RegExp(/([\w\.\-_]+)?\w+@zod.com/gim);
+const checkPassword = new RegExp(/(?=.*\d)/);
 
 const formSchema = z.object({
-	email: z.string().regex(emailRegex, "이메일 형식을 확인해 주세요."),
-	username: z.string().min(2, "사용자 이름을 최소 2자 이상 입력해 주세요."),
-	password: z.string().refine(checkPassword, "비밀번호를 확인해 주세요."),
+	email: z.string().toLowerCase().regex(emailRegex, "zod.com 도메인만 가능합니다."),
+	username: z.string().min(5, "사용자 이름을 최소 5자 이상 입력해 주세요."),
+	password: z
+		.string()
+		.min(PASSWORD_MIN_LENGTH, "비밀번호는 최소 10자 이상을 입력해주세요.")
+		.regex(checkPassword, "비밀번호는 숫자를 포함해야 합니다.")
+		.refine(correctPassword, "비밀번호가 일치하지 않습니다."),
 });
 
 export async function createAccount(prevState: any, formData: FormData) {
@@ -23,8 +29,6 @@ export async function createAccount(prevState: any, formData: FormData) {
 	const result = formSchema.safeParse(data);
 
 	if (!result.success) {
-		console.log(result);
-
 		return {
 			success: false,
 			error: result.error.flatten().fieldErrors,
