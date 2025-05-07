@@ -1,29 +1,22 @@
 "use client";
 
-import Link from "next/link";
-import Button from "../../../components/button";
-import Input from "../../../components/input";
-import { handleForm, logout } from "./actions";
-import { FormActionResult } from "../../../util";
+import Button from "@/components/button";
+import Input from "@/components/input";
+import { FormActionResult } from "@/util";
 import { useFormState } from "react-dom";
 import { useEffect } from "react";
-import PasswordModify from "./components/password-modify";
+import PasswordModify from "./(components)/password-modify";
 import { useRecoilState } from "recoil";
-import { popupVisible } from "../../../state";
+import { popupVisible } from "@/state";
+import { useRouter } from "next/navigation";
+import { ArrowLeftIcon } from "@heroicons/react/24/outline";
+import { handleForm, logout } from "./actions";
+import { UserInfoType } from "@/util/async";
 
-interface IProfile {
-	userId: string;
-	username: string;
-	password: string;
-	email: string | null;
-	bio: string | null;
-	avatar: number | null;
-	create_at: Date;
-	updated_at: Date;
-}
-export default function Profile({ user }: { user: IProfile | null }) {
+export default function Profile({ user }: { user: UserInfoType | null }) {
 	const [state, dispatch] = useFormState<FormActionResult, FormData>(handleForm, null);
 	const [visiblePopup, setVisiblePopup] = useRecoilState(popupVisible);
+	const router = useRouter();
 
 	useEffect(() => {
 		if (state?.success) {
@@ -41,7 +34,13 @@ export default function Profile({ user }: { user: IProfile | null }) {
 				<PasswordModify />
 			) : (
 				<>
-					<Link href="/">&larr; 홈으로</Link>
+					<div
+						className="border-b border-gray-600 pb-2 mb-10 hover:cursor-pointer flex items-center gap-4"
+						onClick={() => router.back()}
+					>
+						<ArrowLeftIcon className="size-5" />
+						이전 화면으로
+					</div>
 					<div className="flex flex-col gap-2 *:font-medium mt-10">
 						<div className="flex items-center">
 							<h1 className="text-2xl">내 프로필</h1>

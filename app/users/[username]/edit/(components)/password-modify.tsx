@@ -1,12 +1,12 @@
 "use client";
 
 import { useFormState } from "react-dom";
-import { FormActionResult, getError } from "../../../../util";
-import Input from "../../../../components/input";
-import Button from "../../../../components/button";
+import { FormActionResult, getError } from "@/util";
+import Input from "@/components/input";
+import Button from "@/components/button";
 import { handleForm } from "./actions";
 import { useSetRecoilState } from "recoil";
-import { popupVisible } from "../../../../state";
+import { popupVisible } from "@/state";
 import { useEffect } from "react";
 
 export default function PasswordModify() {

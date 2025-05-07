@@ -12,7 +12,7 @@ export default function CreateAccount() {
 
 	return (
 		<div className="flex flex-col gap-10 py-8 px-6">
-			<Link href="/">&larr; 이전 화면으로</Link>
+			<Link href="/login">&larr; 이전 화면으로</Link>
 			<div className="flex flex-col gap-2 *:font-medium mt-10">
 				<h1 className="text-2xl">안녕하세요!</h1>
 				<h2 className="text-xl">사용자 정보를 입력하세요.</h2>

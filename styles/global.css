@@ -10,6 +10,18 @@
 	.profile_value {
 		@apply flex-1/2 p-1 pl-5 h-full flex items-center;
 	}
+	.sidebar_link {
+		@apply flex gap-2 items-center;
+	}
+	.sidebar_icon {
+		@apply size-7;
+	}
+	.sidebar_icon_bold {
+		@apply size-10;
+	}
+	.sidebar_text {
+		@apply hidden lg:block;
+	}
 }
 
 @plugin "daisyui" {

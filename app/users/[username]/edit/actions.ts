@@ -1,10 +1,11 @@
 "use server";
 
 import { z } from "zod";
-import { FormActionResult } from "../../../util";
-import db from "../../../lib/db";
-import getSession from "../../../lib/session";
+import { FormActionResult } from "@/util";
+import db from "@/lib/db";
+import getSession from "@/lib/session";
 import { redirect } from "next/navigation";
+import { revalidateTag } from "next/cache";
 
 const formSchema = z.object({
 	username: z.string().min(2, "이름을 입력해 주세요."),
@@ -29,6 +30,8 @@ export async function handleForm(_: any, formData: FormData): Promise<FormAction
 			},
 		});
 		if (user) {
+			revalidateTag("userInfo");
+
 			return {
 				success: true,
 			};

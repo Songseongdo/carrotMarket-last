@@ -1,5 +1,3 @@
-// "use client";
-
 import Link from "next/link";
 import Button from "../components/button";
 import getSession from "../lib/session";
@@ -35,7 +33,7 @@ export default async function RootPage() {
 		<div className="flex flex-col items-center min-h-screen pt-10">
 			{user ? (
 				<>
-					<div className="flex items-center justify-center w-full">
+					{/* <div className="flex items-center justify-center w-full">
 						<div className="text-xs flex mr-3">
 							<Link href="/profile" className="relative size-10">
 								<svg
@@ -74,7 +72,7 @@ export default async function RootPage() {
 						<form action={logout} className="w-1/5 h-1/2 ml-10 ">
 							<Button $text="Log Out"></Button>
 						</form>
-					</div>
+					</div> */}
 					<div className="mt-3 w-full">
 						<Tweet />
 					</div>
