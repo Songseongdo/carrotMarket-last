@@ -1,21 +1,23 @@
 import Link from "next/link";
 import getSession from "../lib/session";
 import db from "../lib/db";
-import { redirect } from "next/navigation";
+// import { redirect } from "next/navigation";
 import Tweets from "./(tabs)/tweets/page";
 import Tweet from "@/components/tweet";
 import React from "react";
+import PopupLinks from "@/components/popup-links";
 
 async function getUser() {
-	const sesstion = await getSession();
-	if (sesstion.id) {
+	const session = await getSession();
+	if (session.id) {
 		return await db.user.findUnique({
 			where: {
-				id: sesstion.id,
+				id: session.id,
 			},
 		});
 	} else {
-		return redirect("/login");
+		// return redirect("/login");
+		return null;
 	}
 }
 
@@ -44,19 +46,8 @@ export default async function RootPage() {
 							로그인
 						</Link>
 					</div>
-					<div className="flex justify-between w-[250px] text-xs">
-						<Link href="/" className="hover:border-b-1">
-							아이디 찾기
-						</Link>
-						<div>|</div>
-						<Link href="/" className="hover:border-b-1">
-							비밀번호 찾기
-						</Link>
-						<div>|</div>
-						<Link href="/create-account" className="hover:border-b-1">
-							회원가입
-						</Link>
-					</div>
+
+					<PopupLinks />
 				</>
 			)}
 		</div>
