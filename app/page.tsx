@@ -1,20 +1,13 @@
 import Link from "next/link";
 import getSession from "../lib/session";
-import db from "../lib/db";
-// import { redirect } from "next/navigation";
-import Tweets from "./(tabs)/tweets/page";
-import Tweet from "@/components/tweet";
+import { redirect } from "next/navigation";
 import React from "react";
 import PopupLinks from "@/components/popup-links";
 
 async function getUser() {
 	const session = await getSession();
 	if (session.id) {
-		return await db.user.findUnique({
-			where: {
-				id: session.id,
-			},
-		});
+		redirect("/home");
 	} else {
 		// return redirect("/login");
 		return null;
@@ -26,15 +19,7 @@ export default async function RootPage() {
 
 	return (
 		<div className="flex flex-col items-center min-h-screen pt-10">
-			{user ? (
-				<>
-					<div className="mt-3 w-full">
-						<Tweet />
-					</div>
-
-					<Tweets />
-				</>
-			) : (
+			{!user && (
 				<>
 					<div className="text-xl mb-10">로그인하고 편리하게 이용하세요.</div>
 
@@ -46,7 +31,6 @@ export default async function RootPage() {
 							로그인
 						</Link>
 					</div>
-
 					<PopupLinks />
 				</>
 			)}

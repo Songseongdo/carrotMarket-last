@@ -36,6 +36,7 @@ export default function Search() {
 	const onBlur = () => {
 		setTimeout(() => {
 			setFocused(false);
+			initValue();
 		}, 100);
 	};
 	const onClickXCircle = () => {
