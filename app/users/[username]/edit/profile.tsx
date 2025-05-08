@@ -12,6 +12,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import { handleForm, logout } from "./actions";
 import { UserInfoType } from "@/util/async";
+import React from "react";
 
 export default function Profile({ user }: { user: UserInfoType | null }) {
 	const [state, dispatch] = useFormState<FormActionResult, FormData>(handleForm, null);

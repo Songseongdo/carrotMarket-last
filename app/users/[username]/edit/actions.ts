@@ -52,11 +52,11 @@ export async function handleForm(_: any, formData: FormData): Promise<FormAction
 }
 
 export async function getUser() {
-	const sesstion = await getSession();
-	if (sesstion.id) {
+	const session = await getSession();
+	if (session.id) {
 		return await db.user.findUnique({
 			where: {
-				id: sesstion.id,
+				id: session.id,
 			},
 		});
 	} else {

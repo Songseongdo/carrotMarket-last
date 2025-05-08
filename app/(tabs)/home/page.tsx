@@ -1,9 +1,12 @@
+"use server";
+
 import Link from "next/link";
 import getSession from "@/lib/session";
 import db from "@/lib/db";
 import { redirect } from "next/navigation";
 import Tweets from "@/app/(tabs)/tweets/page";
 import Tweet from "@/components/tweet";
+import React from "react";
 
 async function getUser() {
 	const sesstion = await getSession();
@@ -22,7 +25,7 @@ export default async function Home() {
 	const user = await getUser();
 
 	return (
-		<div className="flex flex-col items-center min-h-screen pt-10">
+		<div className="flex flex-col items-center min-h-screen">
 			{user ? (
 				<>
 					<div className="mt-3 w-full">

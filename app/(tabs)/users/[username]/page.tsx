@@ -1,3 +1,3 @@
-export default async function UserProfile() {
-	return <div>메인</div>;
+export default async function UserPost() {
+	return <div>유저 포스트</div>;
 }

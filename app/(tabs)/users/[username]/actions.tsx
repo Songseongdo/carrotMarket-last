@@ -5,7 +5,6 @@ import { FormActionResult } from "@/util";
 import db from "@/lib/db";
 import getSession from "@/lib/session";
 import { redirect } from "next/navigation";
-import { Prisma } from "@/lib/generated/prisma";
 
 const formSchema = z.object({
 	username: z.string().min(2, "이름을 입력해 주세요."),
@@ -49,51 +48,9 @@ export async function handleForm(_: any, formData: FormData): Promise<FormAction
 	}
 }
 
-export async function getUser() {
-	const session = await getSession();
-	if (session.id) {
-		return await db.user.findUnique({
-			where: {
-				id: session.id,
-			},
-		});
-	} else {
-		redirect("/");
-	}
-}
-export type UserInfoType = Prisma.PromiseReturnType<typeof getUser>;
-
 export const logout = async () => {
 	const session = await getSession();
 	await session.destroy();
 
 	redirect("/");
 };
-
-export async function getPost() {
-	const session = await getSession();
-	if (session.id) {
-		return await db.tweet.findMany({
-			where: {
-				userId: session.id,
-			},
-		});
-	} else {
-		return [];
-	}
-}
-export type TweetsType = Prisma.PromiseReturnType<typeof getPost>;
-
-export async function getLikes() {
-	const session = await getSession();
-	if (session.id) {
-		return await db.like.findMany({
-			where: {
-				userId: session.id,
-			},
-		});
-	} else {
-		return [];
-	}
-}
-export type LikesType = Prisma.PromiseReturnType<typeof getLikes>;

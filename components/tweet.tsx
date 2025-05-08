@@ -102,7 +102,7 @@ export default function Tweet() {
 
 		return uploadTweet(_, formData);
 	};
-	const [state, dispatch] = useFormState<FormActionResult, FormData>(interceptAction, null);
+	const [_, dispatch] = useFormState<FormActionResult, FormData>(interceptAction, null);
 
 	return (
 		<div className="border  border-neutral-600 w-full rounded-t-2xl">

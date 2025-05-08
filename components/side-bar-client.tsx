@@ -29,7 +29,7 @@ export default function SideBarClient({ user }: ISideBarClientProps) {
 					<div className="sidebar_text">Home</div>
 				</Link>
 				<Link href="/search" className="sidebar_link">
-					{pathname === "/search" ? (
+					{pathname.includes("/search") ? (
 						<svg className="size-7" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
 							<path
 								strokeLinecap="round"
@@ -59,7 +59,7 @@ export default function SideBarClient({ user }: ISideBarClientProps) {
 				)}
 			</div>
 			<div>
-				<Link href={`/users/${user?.username}`} className="sidebar_link">
+				<Link href={`/users/${user?.username}/edit`} className="sidebar_link">
 					<UserCircleIcon className="sidebar_icon" />
 					<div className="flex flex-col">
 						<div className="sidebar_text">{user?.username}</div>

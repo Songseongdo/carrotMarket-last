@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import RecoilProvider from "../components/recoilProvider";
 import "../styles/global.css";
+import React from "react";
 
 export const metadata: Metadata = {
 	title: {

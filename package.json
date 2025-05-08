@@ -38,6 +38,7 @@
     "@types/react": "19.1.0",
     "@types/react-dom": "^19.1.2",
     "@types/validator": "^13.15.0",
+    "autoprefixer": "^10.4.21",
     "daisyui": "^5.0.19",
     "prettier": "3.5.3",
     "typescript": "5.8.3"

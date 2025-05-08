@@ -6,6 +6,8 @@
 		"skipLibCheck": true,
 		"strict": true,
 		"noEmit": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
 		"incremental": true,
 		"module": "esnext",
 		"esModuleInterop": true,
@@ -18,10 +20,18 @@
 				"name": "next"
 			}
 		],
+		"baseUrl": ".",
 		"paths": {
 			"@/*": ["./*"]
 		}
 	},
-	"include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx", "tailwind.config.js"],
+	"include": [
+		"next-env.d.ts",
+		".next/types/**/*.ts",
+		"src/**/*.{ts,tsx}",
+		"tailwind.config.js",
+		"util/**/*.{ts,tsx}",
+		"lib/**/*.{ts,tsx}"
+	],
 	"exclude": ["node_modules"]
 }

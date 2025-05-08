@@ -76,7 +76,7 @@ const tweetSchema = z.object({
 	url: z.string(),
 });
 
-export async function uploadTweet(prevState: any, formData: FormData): Promise<FormActionResult> {
+export async function uploadTweet(_: any, formData: FormData): Promise<FormActionResult> {
 	const data = {
 		comment: formData.get("comment"),
 		url: formData.get("url"),

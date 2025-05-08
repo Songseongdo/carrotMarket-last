@@ -1,7 +1,8 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import styles from "../styles/error.module.css";
+
+import React from "react";
 
 export default function RootNotFound() {
 	const route = useRouter();
@@ -9,10 +10,10 @@ export default function RootNotFound() {
 		route.back();
 	};
 	return (
-		<div className={styles.container}>
-			<div className={styles.title}>페이지가 존재하지 않습니다.</div>
+		<div className="pt-12">
+			<div className="text-red-700 text-2xl">페이지가 존재하지 않습니다</div>
 
-			<div className={styles.btn} onClick={onClick}>
+			<div className="mt-13 hover:cursor-pointer" onClick={onClick}>
 				&larr; 이전 화면으로 돌아가기
 			</div>
 		</div>

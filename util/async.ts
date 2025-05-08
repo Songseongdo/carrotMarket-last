@@ -1,10 +1,9 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import getSession from "../lib/session";
+import getSession from "@/lib/session";
 import db from "@/lib/db";
 import { Prisma } from "@/lib/generated/prisma";
-import { unstable_cache as NextCache } from "next/cache";
 
 interface IDologinProps {
 	id: number;
@@ -52,21 +51,65 @@ export async function uploadToSignedUrl(signedUrl: string, file: File) {
 	}
 }
 
-export async function getUserInfo() {
+export async function getLoginUserInfo() {
 	const session = await getSession();
+	if (session.id) {
+		const user = await db.user.findUnique({
+			where: {
+				id: session.id,
+			},
+		});
+		return user;
+	} else {
+		return null;
+	}
+}
+
+export async function getUserInfo(id: number) {
+	if (!id) return null;
+
 	const user = await db.user.findUnique({
 		where: {
-			id: session.id,
-		},
-		select: {
-			id: true,
-			username: true,
-			avatar: true,
-			userId: true,
-			email: true,
+			id: id,
 		},
 	});
 	return user;
 }
-// export const getUserInfo = NextCache(fetchUserInfo, ["user-info"], { tags: ["userInfo"] });
 export type UserInfoType = Prisma.PromiseReturnType<typeof getUserInfo>;
+
+export async function getPost(id: number) {
+	const tweet = await db.tweet.findMany({
+		where: {
+			userId: id,
+		},
+	});
+
+	return tweet;
+}
+export type TweetsType = Prisma.PromiseReturnType<typeof getPost>;
+
+export async function getLikes(id: number) {
+	const like = await db.like.findMany({
+		where: {
+			userId: id,
+		},
+	});
+	return like;
+}
+export type LikesType = Prisma.PromiseReturnType<typeof getLikes>;
+
+export async function getIdFromUserId(userId: string) {
+	const user = await db.user.findUnique({
+		where: {
+			userId: userId,
+		},
+		select: {
+			id: true,
+		},
+	});
+	if (user) {
+		return user.id;
+	} else {
+		return null;
+	}
+}

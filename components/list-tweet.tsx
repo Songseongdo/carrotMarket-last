@@ -5,14 +5,10 @@ import Link from "next/link";
 import { PhotoIcon, UserIcon, HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
 import { HeartIcon, ChatBubbleOvalLeftIcon } from "@heroicons/react/24/outline";
 import { useEffect, useOptimistic, useState } from "react";
-import { getTweetUserInfo, getUserInfo } from "@/util/async";
+import { getTweetUserInfo, getLoginUserInfo } from "@/util/async";
 import { setLike, setUnlike } from "@/app/(tabs)/tweets/actions";
 
 interface ILike {
-	id: number;
-	userId: number;
-}
-interface IResponse {
 	id: number;
 	userId: number;
 }
@@ -23,7 +19,6 @@ interface IListTweetProps {
 	userId: number | null;
 	Like: ILike[];
 	photo: string | null;
-	Response: IResponse[];
 	replyCount: number;
 }
 
@@ -38,7 +33,7 @@ export default function ListTweet({
 	userId,
 	Like,
 	photo,
-	Response,
+
 	replyCount,
 }: IListTweetProps) {
 	const [tweetUser, setTweetUser] = useState<IUserInfo | null>(null);
@@ -57,7 +52,7 @@ export default function ListTweet({
 				setTweetUser(tweetUserInfo);
 			}
 
-			const userInfo = await getUserInfo();
+			const userInfo = await getLoginUserInfo();
 			setUserInfo(userInfo?.id!);
 			for (let i = 0; i < Like.length; i++) {
 				if (Like[i].userId === userInfo?.id) {
@@ -71,8 +66,6 @@ export default function ListTweet({
 	}, [userId, Like]);
 
 	const clickLike = async () => {
-		console.log(isLike, likeId);
-
 		if (isLike) {
 			addOptimisticLike(false);
 			const rs = await setUnlike(likeId);

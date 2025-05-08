@@ -8,7 +8,7 @@ import { getSignedUploadUrl, uploadReply } from "@/app/(tabs)/tweets/actions";
 import Input from "./input";
 import Button from "./button";
 import { replySchema, ReplyType } from "@/app/(tabs)/tweets/schema";
-import { getUserInfo, uploadToSignedUrl, UserInfoType } from "@/util/async";
+import { uploadToSignedUrl, UserInfoType, getLoginUserInfo } from "@/util/async";
 
 interface IReplyProps {
 	tweetId: number;
@@ -31,7 +31,7 @@ export default function Reply({ tweetId, callSumit }: IReplyProps) {
 
 	useEffect(() => {
 		(async () => {
-			const info = await getUserInfo();
+			const info = await getLoginUserInfo();
 			setUserInfo(info);
 		})();
 	}, []);

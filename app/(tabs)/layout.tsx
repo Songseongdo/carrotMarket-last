@@ -6,7 +6,7 @@ export default function TabLayout({ children }: { children: React.ReactNode }) {
 			<div className="w-12 shrink-0 pl-4 lg:w-50">
 				<SideBar />
 			</div>
-			<div className="flex-1 overflow-auto px-5 max-w-[700px]">{children}</div>
+			<div className="flex-1 overflow-auto px-5 max-w-[700px] pt-10">{children}</div>
 		</div>
 	);
 }
