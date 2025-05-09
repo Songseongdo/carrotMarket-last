@@ -7,6 +7,7 @@ import { HeartIcon, ChatBubbleOvalLeftIcon } from "@heroicons/react/24/outline";
 import { useEffect, useOptimistic, useState } from "react";
 import { getTweetUserInfo, getLoginUserInfo } from "@/util/async";
 import { setLike, setUnlike } from "@/app/(tabs)/tweets/actions";
+import React from "react";
 
 interface ILike {
 	id: number;

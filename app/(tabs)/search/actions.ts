@@ -34,6 +34,7 @@ export async function getUsers(text: string) {
 			username: true,
 		},
 	});
+
 	if (users) {
 		return users;
 	} else {

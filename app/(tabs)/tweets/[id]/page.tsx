@@ -1,9 +1,8 @@
-import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import Link from "next/link";
 import { getCachedtweetInfo, TweetType } from "./actions";
 import { notFound } from "next/navigation";
 import ReplyList from "@/components/reply-list";
 import TweetClientView from "@/components/tweet-client-view";
+import MovePrev from "@/components/move-prev";
 
 export const dynamic = "auto"; // 기본
 
@@ -18,14 +17,7 @@ export default async function TweetsDetail({ params }: { params: { id: string } 
 
 	return (
 		<div>
-			<div className="my-5 text-2xl">
-				<Link href="/" className="flex items-center">
-					<div className="size-5">
-						<ArrowLeftIcon />
-					</div>
-					&nbsp;&nbsp;&nbsp;Post
-				</Link>
-			</div>
+			<MovePrev $size={1} $text="Post" />
 
 			<TweetClientView tweetInfo={tweetInfo} />
 

@@ -15,12 +15,12 @@ export default function UserInfoTabs({ user, searched = false }: ITabsProps) {
 
 	const tabs = searched
 		? [
-				{ label: "Post", href: `/search/${user.userId}` },
+				{ label: "Posts", href: `/search/${user.userId}` },
 				{ label: "Replies", href: `/search/${user.userId}/replies` },
 				{ label: "Likes", href: `/search/${user.userId}/likes` },
 			]
 		: [
-				{ label: "Post", href: `/users/${user.username}` },
+				{ label: "Posts", href: `/users/${user.username}` },
 				{ label: "Replies", href: `/users/${user.username}/replies` },
 				{ label: "Likes", href: `/users/${user.username}/likes` },
 			];

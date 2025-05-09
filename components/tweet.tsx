@@ -7,6 +7,7 @@ import { PhotoIcon, GifIcon } from "@heroicons/react/24/outline";
 import { uploadTweet, getSignedUploadUrl } from "@/app/(tabs)/tweets/actions";
 import { FormActionResult } from "@/util";
 import { useFormState } from "react-dom";
+import React from "react";
 
 export default function Tweet() {
 	const inputRef = useRef<HTMLInputElement>(null);

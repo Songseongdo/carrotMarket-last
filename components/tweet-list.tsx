@@ -6,7 +6,6 @@ import ListTweet from "./list-tweet";
 import Pagination from "./pagination";
 import { getMoreTweets } from "@/app/(tabs)/tweets/actions";
 import { TWEET_PAGE_SIZE } from "@/lib/consts";
-import { getTweetsTotalCount } from "@/util/async";
 import React from "react";
 
 interface ITweetListProps {
@@ -20,16 +19,8 @@ export default function TweetList({ initialTweets }: ITweetListProps) {
 
 	useEffect(() => {
 		setTweets(initialTweets);
+		setTotalCount(initialTweets.length);
 	}, [initialTweets]);
-
-	useEffect(() => {
-		const getCount = async () => {
-			const count = await getTweetsTotalCount();
-			setTotalCount(count);
-		};
-
-		getCount();
-	}, []);
 
 	const fetchMoreTweets = async (page: number) => {
 		const newTweets = await getMoreTweets(page);
@@ -44,11 +35,13 @@ export default function TweetList({ initialTweets }: ITweetListProps) {
 	return (
 		<div className="flex flex-col">
 			{Tweets?.map((tweet: any) => <ListTweet key={tweet.id} {...tweet} replyCount={tweet.Response.length} />)}
-			<Pagination
-				totalCount={totalCount}
-				pageSize={TWEET_PAGE_SIZE}
-				onPageChange={(page) => onPageChange(page)}
-			/>
+			{totalCount === 0 ? null : (
+				<Pagination
+					totalCount={totalCount}
+					pageSize={TWEET_PAGE_SIZE}
+					onPageChange={(page) => onPageChange(page)}
+				/>
+			)}
 		</div>
 	);
 }
