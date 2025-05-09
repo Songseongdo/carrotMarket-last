@@ -7,7 +7,8 @@ export type FormFields =
 	| "phonenumber"
 	| "verifycode"
 	| "prev_password"
-	| "comment";
+	| "comment"
+	| "bio";
 export type FormActionResult =
 	| null
 	| { success: true }

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { ArrowLeftIcon, MagnifyingGlassIcon, XCircleIcon } from "@heroicons/react/24/solid";
 import SearchList from "./(components)/search-list";
 import { UsersType } from "./actions";
+import React from "react";
 
 export default function Search() {
 	const [focused, setFocused] = useState(false);

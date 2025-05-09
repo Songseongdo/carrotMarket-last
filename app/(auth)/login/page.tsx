@@ -6,6 +6,7 @@ import Link from "next/link";
 import Input from "@/components/input";
 import Button from "@/components/button";
 import { FormActionResult, getError } from "@/util";
+import React from "react";
 
 export default function Login() {
 	const [state, dispatch] = useFormState<FormActionResult, FormData>(handleForm, null);
@@ -25,9 +26,13 @@ export default function Login() {
 					<Button $text="로그인" />
 				</div>
 			</form>
-			
-			<Link href="/create-account" className="w-full h-10 flex items-center justify-center rounded-full disabled:bg-neutral-600 disabled:text-neutral-300 disabled:cursor-not-allowed bg-blue-500 hover:bg-blue-600">회원 가입</Link>
 
+			<Link
+				href="/create-account"
+				className="w-full h-10 flex items-center justify-center rounded-full disabled:bg-neutral-600 disabled:text-neutral-300 disabled:cursor-not-allowed bg-blue-500 hover:bg-blue-600"
+			>
+				회원 가입
+			</Link>
 		</div>
 	);
 }

@@ -2,7 +2,8 @@
 
 import Button from "@/components/button";
 import Input from "@/components/input";
-import { FormActionResult } from "@/util";
+import Textarea from "@/components/textarea";
+import { FormActionResult, getError } from "@/util";
 import { useFormState } from "react-dom";
 import { useEffect } from "react";
 import PasswordModify from "./(components)/password-modify";
@@ -61,7 +62,17 @@ export default function Profile({ user }: { user: UserInfoType | null }) {
 							<div className="profile_container">
 								<div className="profile_label">유저 이름</div>
 								<div className="profile_value">
-									<Input $name="username" defaultValue={user?.username || ""} />
+									<Input
+										$name="username"
+										defaultValue={user?.username || ""}
+										$errors={getError(state, "username")}
+									/>
+								</div>
+							</div>
+							<div className="flex items-center h-40">
+								<div className="profile_label h-15">BIO</div>
+								<div className="profile_value">
+									<Textarea $name="bio" defaultValue={user?.bio || ""} />
 								</div>
 							</div>
 							<div className="profile_container">
@@ -75,7 +86,11 @@ export default function Profile({ user }: { user: UserInfoType | null }) {
 							<div className="profile_container">
 								<div className="profile_label">이메일</div>
 								<div className="profile_value">
-									<Input $name="email" defaultValue={user?.email || ""} />
+									<Input
+										$name="email"
+										defaultValue={user?.email || ""}
+										$errors={getError(state, "email")}
+									/>
 								</div>
 							</div>
 

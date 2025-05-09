@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { UsersType } from "../actions";
 import { UserIcon } from "@heroicons/react/24/solid";
+import React from "react";
 
 interface ISearchBarProps {
 	users: UsersType;

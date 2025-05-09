@@ -3,9 +3,11 @@
 import Link from "next/link";
 import Input from "@/components/input";
 import Button from "@/components/button";
+import Textarea from "@/components/textarea";
 import { handleForm } from "./actions";
 import { FormActionResult, getError } from "@/util";
 import { useFormState } from "react-dom";
+import React from "react";
 
 export default function CreateAccount() {
 	const [state, dispatch] = useFormState<FormActionResult, FormData>(handleForm, null);
@@ -27,6 +29,7 @@ export default function CreateAccount() {
 					type="password"
 					$errors={getError(state, "confirm_password")}
 				/>
+				<Textarea $name="bio" placeholder="BIO" />
 				<Input $name="email" placeholder="이메일" type="email" $errors={getError(state, "email")} />
 
 				<div className="mt-10 h-10">
