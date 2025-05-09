@@ -41,8 +41,6 @@ export default async function SearchReplies({ params }: { params: { userid: stri
 	const cleanUserId = decodeURIComponent(params.userid).split("/").pop();
 	const init = await getCachedReplies(cleanUserId!);
 
-	console.log(init);
-
 	return (
 		<div className="p-5">
 			<TweetList initialTweets={init} />

@@ -41,8 +41,6 @@ export default async function SearchLikes({ params }: { params: { userid: string
 	const cleanUserId = decodeURIComponent(params.userid).split("/").pop();
 	const init = await getCachedLikes(decodeURIComponent(cleanUserId!));
 
-	console.log(init);
-
 	return (
 		<div className="p-5">
 			<TweetList initialTweets={init} />
