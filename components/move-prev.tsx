@@ -13,7 +13,6 @@ export default function MovePrev({ $text, $size = 0 }: IMovePrevProps) {
 		route.back();
 	};
 	const textSize = $size === 1 ? "text-2xl" : "text-md";
-	console.log($size);
 
 	return (
 		<div className="p-3 hover:cursor-pointer flex gap-5 items-center" onClick={onClick}>
