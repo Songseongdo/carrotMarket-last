@@ -10,6 +10,7 @@ import { z } from "zod";
 import { latestReplySchema } from "./schema";
 import { Prisma } from "@/lib/generated/prisma";
 import { revalidateTag } from "next/cache";
+// import { unstable_cache as nextCache } from "next/cache";
 
 const s3 = new S3Client({
 	endpoint: `https://${process.env.CF_ACCOUNT_ID}.r2.cloudflarestorage.com`,
@@ -54,7 +55,7 @@ export async function getMoreTweets(page: number) {
 		include: {
 			Like: {
 				select: {
-					id: true,
+					tweetId: true,
 					userId: true,
 				},
 			},
@@ -165,32 +166,42 @@ export async function getReplyInfo(id: number) {
 }
 export type ReplyType = Prisma.PromiseReturnType<typeof getReplyInfo>;
 
-export async function setUnlike(id: number) {
+export async function setUnlike(tweetId: number) {
+	const session = await getSession();
 	const like = await db.like.delete({
 		where: {
-			id: id,
-		},
-		select: {
-			id: true,
+			id: { tweetId: tweetId, userId: session.id! },
 		},
 	});
-	if (like) {
-		revalidateTag("tweets");
-	}
+
 	return like;
 }
-export async function setLike(userId: number, tweetId: number) {
+export async function setLike(tweetId: number) {
+	const session = await getSession();
 	const like = await db.like.create({
 		data: {
-			userId: userId,
+			userId: session.id!,
 			tweetId: tweetId,
 		},
-		select: {
-			id: true,
+	});
+
+	return like;
+}
+
+export async function getLikeStatus(tweetId: number) {
+	const session = await getSession();
+	const isLiked = await db.like.findUnique({
+		where: {
+			id: { tweetId: tweetId, userId: session.id! },
 		},
 	});
-	if (like) {
-		revalidateTag("tweets");
-	}
-	return like;
+	const likeCount = await db.like.count({
+		where: {
+			tweetId,
+		},
+	});
+	return {
+		isLiked: Boolean(isLiked),
+		likeCount,
+	};
 }

@@ -13,7 +13,7 @@ interface ITweetListProps {
 }
 
 export default function TweetList({ initialTweets }: ITweetListProps) {
-	const [Tweets, setTweets] = useState<InitialTweets | null>(null);
+	const [Tweets, setTweets] = useState<Awaited<InitialTweets> | null>(null);
 	const [_, setPage] = useState(1);
 	const [totalCount, setTotalCount] = useState(0);
 

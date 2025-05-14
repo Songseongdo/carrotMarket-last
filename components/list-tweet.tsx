@@ -2,86 +2,41 @@
 
 import { formatToTimeAgo } from "@/util";
 import Link from "next/link";
-import { PhotoIcon, UserIcon, HeartIcon as SolidHeartIcon } from "@heroicons/react/24/solid";
-import { HeartIcon, ChatBubbleOvalLeftIcon } from "@heroicons/react/24/outline";
-import { useEffect, useOptimistic, useState } from "react";
-import { getTweetUserInfo, getLoginUserInfo } from "@/util/async";
-import { setLike, setUnlike } from "@/app/(tabs)/tweets/actions";
-import React from "react";
+import { PhotoIcon, UserIcon } from "@heroicons/react/24/solid";
+import { ChatBubbleOvalLeftIcon } from "@heroicons/react/24/outline";
+import { getTweetUserInfo } from "@/util/async";
+import React, { useEffect, useState } from "react";
+import { getLikeStatus } from "@/app/(tabs)/tweets/actions";
+import LikeOptimistic from "./like-optimistic";
 
-interface ILike {
-	id: number;
-	userId: number;
-}
 interface IListTweetProps {
 	id: number;
 	tweet: string;
 	create_at: Date;
 	userId: number | null;
-	Like: ILike[];
 	photo: string | null;
 	replyCount: number;
 }
 
-interface IUserInfo {
-	username: string;
-}
-
-export default function ListTweet({
-	id,
-	tweet,
-	create_at,
-	userId,
-	Like,
-	photo,
-
-	replyCount,
-}: IListTweetProps) {
-	const [tweetUser, setTweetUser] = useState<IUserInfo | null>(null);
-	const [userInfo, setUserInfo] = useState<number | null>(null);
-	const [isLike, setIsLike] = useState(false);
-	const [likeId, setLikeId] = useState(0);
-
-	const [optimisticLikes, addOptimisticLike] = useOptimistic(Like.length, (state, liked: boolean) =>
-		liked ? state + 1 : state - 1
-	);
+export default function ListTweet({ id, tweet, create_at, userId, photo, replyCount }: IListTweetProps) {
+	const [tweetUser, setTweetUser] = useState<{ username: string } | null>(null);
+	const [isLiked, setIsLiked] = useState(false);
+	const [likeCount, setLikeCount] = useState(0);
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const tweetUserInfo = await getTweetUserInfo(userId || 0);
-			if (tweetUserInfo) {
-				setTweetUser(tweetUserInfo);
-			}
+		const fetchUser = async () => {
+			const data = await getTweetUserInfo(userId || 0);
+			setTweetUser(data);
 
-			const userInfo = await getLoginUserInfo();
-			setUserInfo(userInfo?.id!);
-			for (let i = 0; i < Like.length; i++) {
-				if (Like[i].userId === userInfo?.id) {
-					setIsLike(true);
-					setLikeId(Like[i].id);
-					break;
-				}
-			}
+			likeStatus();
 		};
-		fetchData();
-	}, [userId, Like]);
+		fetchUser();
+	}, [userId, id]);
 
-	const clickLike = async () => {
-		if (isLike) {
-			addOptimisticLike(false);
-			const rs = await setUnlike(likeId);
-			if (rs) {
-				setIsLike(false);
-			}
-		} else {
-			addOptimisticLike(true);
-			if (userInfo) {
-				const rs = await setLike(userInfo!, id);
-				if (rs) {
-					setIsLike(true);
-				}
-			}
-		}
+	const likeStatus = async () => {
+		const { isLiked, likeCount } = await getLikeStatus(id);
+		setIsLiked(isLiked);
+		setLikeCount(likeCount);
 	};
 
 	return (
@@ -119,15 +74,17 @@ export default function ListTweet({
 								<ChatBubbleOvalLeftIcon className="size-5" />
 								<div className="">{replyCount}</div>
 							</div>
-							<div
-								className="flex items-center gap-1 hover:cursor-pointer tooltip tooltip-secondary"
-								data-tip="Like"
-								onClick={clickLike}
-							>
-								{isLike ? <SolidHeartIcon className="size-5" /> : <HeartIcon className="size-5" />}
+							<LikeOptimistic
+								isLiked={isLiked}
+								likeCount={likeCount}
+								postId={id}
+								onChange={(newLike: boolean, likeCount: number) => {
+									console.log("onchange", newLike, likeCount);
 
-								<div className="">{optimisticLikes}</div>
-							</div>
+									setIsLiked(newLike);
+									setLikeCount(likeCount);
+								}}
+							/>
 						</div>
 					</div>
 				</div>

@@ -6,14 +6,14 @@ import { unstable_cache as NextCache } from "next/cache";
 import React from "react";
 
 async function getTweetInfo() {
-	const tweets = db.tweet.findMany({
+	const tweets = await db.tweet.findMany({
 		orderBy: {
 			create_at: "desc",
 		},
 		include: {
 			Like: {
 				select: {
-					id: true,
+					tweetId: true,
 					userId: true,
 				},
 			},

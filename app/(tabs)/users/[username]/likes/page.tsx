@@ -21,7 +21,7 @@ async function getUsersLikes(username: string) {
 		include: {
 			Like: {
 				select: {
-					id: true,
+					tweetId: true,
 					userId: true,
 				},
 			},

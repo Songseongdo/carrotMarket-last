@@ -16,7 +16,7 @@ async function getSearchPosts(userId: string) {
 		include: {
 			Like: {
 				select: {
-					id: true,
+					tweetId: true,
 					userId: true,
 				},
 			},
