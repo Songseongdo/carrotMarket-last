@@ -74,6 +74,8 @@ Vercel과 Vercel Postgres 로 배포
 
 4. server actino 에 alert 사용 시 무조건 **에러** 발생
 
+
+
 npm i -g vercel
 vercel login
 vercel link
